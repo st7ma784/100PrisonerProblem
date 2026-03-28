@@ -1,0 +1,198 @@
+.results-display {
+  background: white;
+  border-radius: 8px;
+  padding: 2rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.results-display h2 {
+  margin-top: 0;
+  color: #333;
+}
+
+.results-summary {
+  margin-bottom: 2rem;
+}
+
+.summary-card {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 2rem;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+}
+
+.summary-card.success {
+  background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+  border: 2px solid #2ecc71;
+}
+
+.summary-card.failure {
+  background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+  border: 2px solid #e74c3c;
+}
+
+.summary-icon {
+  font-size: 3rem;
+  font-weight: bold;
+  color: white;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  min-width: 80px;
+  text-align: center;
+}
+
+.summary-text {
+  flex: 1;
+}
+
+.summary-label {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+.summary-desc {
+  color: #555;
+  font-size: 1rem;
+}
+
+.cycle-details {
+  background-color: #f9f9f9;
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+  border-left: 4px solid #667eea;
+}
+
+.cycle-details h3 {
+  margin-top: 0;
+  color: #333;
+}
+
+.cycle-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 1rem;
+}
+
+.cycle-stat {
+  background: white;
+  padding: 1rem;
+  border-radius: 6px;
+  text-align: center;
+  border: 1px solid #ddd;
+}
+
+.stat-number {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #667eea;
+  margin-bottom: 0.5rem;
+}
+
+.stat-name {
+  color: #666;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+}
+
+.prisoners-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.prisoners-section {
+  border-radius: 8px;
+  padding: 1.5rem;
+}
+
+.prisoners-section h3 {
+  margin-top: 0;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.success-section {
+  background-color: #f0fdf4;
+  border: 2px solid #2ecc71;
+}
+
+.failure-section {
+  background-color: #fef2f2;
+  border: 2px solid #e74c3c;
+}
+
+.prisoner-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.prisoner-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.5rem 0.75rem;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  color: white;
+}
+
+.success-badge {
+  background-color: #2ecc71;
+}
+
+.failure-badge {
+  background-color: #e74c3c;
+}
+
+.prisoner-badge strong {
+  font-size: 0.9rem;
+  margin-bottom: 0.2rem;
+}
+
+.cycle-length {
+  font-size: 0.75rem;
+  opacity: 0.9;
+}
+
+.prisoner-more {
+  padding: 0.5rem 0.75rem;
+  background-color: #ddd;
+  color: #333;
+  border-radius: 4px;
+  font-size: 0.85rem;
+}
+
+.explanation {
+  background-color: #e8f4f8;
+  padding: 1.5rem;
+  border-radius: 8px;
+  border-left: 4px solid #3498db;
+}
+
+.explanation h3 {
+  margin-top: 0;
+  color: #333;
+}
+
+.explanation p {
+  color: #555;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.explanation ul {
+  margin-bottom: 1rem;
+  padding-left: 1.5rem;
+}
+
+.explanation li {
+  color: #555;
+  margin-bottom: 0.5rem;
+  line-height: 1.6;
+}

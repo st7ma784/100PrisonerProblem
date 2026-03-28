@@ -1,0 +1,44 @@
+.visualization-container {
+  background: white;
+  border-radius: 8px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.visualization-container h2 {
+  margin-top: 0;
+  color: #333;
+  font-size: 1.5rem;
+}
+
+.viz-description {
+  color: #666;
+  font-size: 0.95rem;
+  margin-bottom: 1.5rem;
+}
+
+.visualization-canvas {
+  border: 1px solid #ddd;
+  background-color: #f9f9f9;
+  max-width: 100%;
+  border-radius: 4px;
+  display: block;
+  margin-bottom: 1.5rem;
+}
+
+.cycle-stats {
+  background-color: #f5f7fa;
+  padding: 1rem;
+  border-radius: 4px;
+  border-left: 4px solid #667eea;
+}
+
+.cycle-stats p {
+  margin: 0.5rem 0;
+  color: #333;
+}
+
+.cycle-stats strong {
+  color: #667eea;
+}

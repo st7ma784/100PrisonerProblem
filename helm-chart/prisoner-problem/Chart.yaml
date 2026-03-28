@@ -1,0 +1,15 @@
+apiVersion: v2
+name: prisoner-problem
+description: A Helm chart for the 100 Prisoner Problem interactive web application
+type: application
+version: 1.0.0
+appVersion: "1.0.0"
+keywords:
+  - prisoner-problem
+  - interactive
+  - web-ui
+  - docker
+  - kubernetes
+maintainers:
+  - name: Developer
+    email: dev@example.com

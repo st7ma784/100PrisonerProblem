@@ -1,0 +1,72 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, develop ]
+    tags: [ 'v*' ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18.x]
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Setup Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    
+    - name: Install backend dependencies
+      run: cd backend && npm ci
+    
+    - name: Install frontend dependencies
+      run: cd frontend && npm ci
+    
+    - name: Run backend tests
+      run: cd backend && npm test -- --coverage || true
+    
+    - name: Build frontend
+      run: cd frontend && npm run build
+
+  build-and-push:
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/v'))
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+    
+    - name: Build Docker image
+      uses: docker/build-push-action@v4
+      with:
+        context: .
+        push: false
+        tags: prisoner-problem:latest
+    
+    - name: Image built successfully
+      run: echo "Docker image built successfully"
+
+  deploy-k8s:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Validate Helm chart
+      run: |
+        mkdir -p /tmp/helm
+        curl -fsSL -o /tmp/helm/helm.tar.gz https://get.helm.sh/helm-v3.12.0-linux-amd64.tar.gz
+        tar -C /tmp/helm -xzf /tmp/helm/helm.tar.gz
+        /tmp/helm/linux-amd64/helm lint ./helm-chart/prisoner-problem

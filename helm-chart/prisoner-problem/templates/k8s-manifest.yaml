@@ -1,0 +1,141 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: prisoner-problem
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: prisoner-config
+  namespace: prisoner-problem
+data:
+  NODE_ENV: "production"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: prisoner-problem-service
+  namespace: prisoner-problem
+  labels:
+    app: prisoner-problem
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 80
+      targetPort: 3001
+      protocol: TCP
+      name: http
+  selector:
+    app: prisoner-problem
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prisoner-problem
+  namespace: prisoner-problem
+  labels:
+    app: prisoner-problem
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: prisoner-problem
+  template:
+    metadata:
+      labels:
+        app: prisoner-problem
+    spec:
+      containers:
+      - name: prisoner-problem
+        image: prisoner-problem:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 3001
+          name: http
+        env:
+        - name: NODE_ENV
+          valueFrom:
+            configMapKeyRef:
+              name: prisoner-config
+              key: NODE_ENV
+        - name: PORT
+          value: "3001"
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "100m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        livenessProbe:
+          httpGet:
+            path: /api/health
+            port: 3001
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /api/health
+            port: 3001
+          initialDelaySeconds: 10
+          periodSeconds: 5
+          timeoutSeconds: 3
+          failureThreshold: 3
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - prisoner-problem
+              topologyKey: kubernetes.io/hostname
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: prisoner-problem-hpa
+  namespace: prisoner-problem
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: prisoner-problem
+  minReplicas: 2
+  maxReplicas: 5
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 70
+  - type: Resource
+    resource:
+      name: memory
+      target:
+        type: Utilization
+        averageUtilization: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: prisoner-problem-netpol
+  namespace: prisoner-problem
+spec:
+  podSelector:
+    matchLabels:
+      app: prisoner-problem
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - namespaceSelector: {}
+    ports:
+    - protocol: TCP
+      port: 3001

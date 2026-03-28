@@ -1,0 +1,154 @@
+.strategy-panel {
+  display: grid;
+  gap: 2rem;
+}
+
+.strategy-section {
+  background: white;
+  border-radius: 8px;
+  padding: 2rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.strategy-section h2 {
+  margin-top: 0;
+  color: #333;
+}
+
+.strategy-section p {
+  color: #666;
+  margin-bottom: 1.5rem;
+}
+
+.strategy-list {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.strategy-card {
+  border: 2px solid #e0e0e0;
+  border-radius: 6px;
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.strategy-card:hover {
+  border-color: #667eea;
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.15);
+}
+
+.strategy-card.selected {
+  border-color: #667eea;
+  background-color: #f5f7ff;
+}
+
+.strategy-card h3 {
+  margin-top: 0;
+  color: #333;
+}
+
+.strategy-card p {
+  color: #666;
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+}
+
+.code-editor {
+  margin-bottom: 1.5rem;
+}
+
+.code-editor label {
+  display: block;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+.code-editor textarea {
+  width: 100%;
+  padding: 1rem;
+  font-family: 'Courier New', monospace;
+  font-size: 0.9rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+.editor-info {
+  background-color: #f9f9f9;
+  border-left: 4px solid #667eea;
+  padding: 1.5rem;
+  border-radius: 4px;
+  margin-bottom: 1.5rem;
+}
+
+.editor-info h4 {
+  margin-top: 0;
+  color: #333;
+}
+
+.editor-info ul {
+  margin-bottom: 0;
+  padding-left: 1.5rem;
+}
+
+.editor-info li {
+  margin-bottom: 0.5rem;
+  color: #666;
+}
+
+.editor-info code {
+  background-color: #f0f0f0;
+  padding: 0.2rem 0.4rem;
+  border-radius: 2px;
+  font-family: 'Courier New', monospace;
+  color: #e74c3c;
+}
+
+.results-section {
+  margin-top: 1.5rem;
+  padding: 1.5rem;
+  background-color: #f0f8ff;
+  border-radius: 4px;
+}
+
+.results-section h3 {
+  margin-top: 0;
+  color: #333;
+}
+
+.results-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+}
+
+.stat-card {
+  background: white;
+  padding: 1rem;
+  border-radius: 4px;
+  text-align: center;
+  border-left: 4px solid #aaa;
+}
+
+.stat-card.success-green {
+  border-left-color: #2ecc71;
+}
+
+.stat-card.failure-red {
+  border-left-color: #e74c3c;
+}
+
+.stat-label {
+  color: #666;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+
+.stat-value {
+  color: #333;
+  font-size: 1.8rem;
+  font-weight: bold;
+}
