@@ -10,20 +10,24 @@ nameOverride: ""
 fullnameOverride: ""
 
 service:
-  type: LoadBalancer
+  type: ClusterIP
   port: 80
   targetPort: 3001
 
 ingress:
-  enabled: false
+  enabled: true
   className: "nginx"
-  annotations: {}
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
   hosts:
     - host: prisoner-problem.example.com
       paths:
         - path: /
           pathType: Prefix
-  tls: []
+  tls:
+    - secretName: prisoner-problem-tls
+      hosts:
+        - prisoner-problem.example.com
 
 resources:
   limits:
