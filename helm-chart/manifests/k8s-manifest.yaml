@@ -47,7 +47,7 @@ spec:
     spec:
       containers:
       - name: prisoner-problem
-        image: prisoner-problem:latest
+        image: st7ma784/prisoner-problem:latest
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 3001
