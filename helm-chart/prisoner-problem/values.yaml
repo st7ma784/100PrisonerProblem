@@ -10,12 +10,18 @@ nameOverride: ""
 fullnameOverride: ""
 
 service:
-  type: LoadBalancer
+  type: ClusterIP
   port: 80
   targetPort: 3001
 
 ingress:
-  enabled: false
+  enabled: true
+  className: nginx
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    nginx.ingress.kubernetes.io/rewrite-target: /
+  # The hostname is resolved dynamically in the template using Helm lookup()
+  # against the Rancher cluster domain label. No hard-coding required.
 
 resources:
   limits:

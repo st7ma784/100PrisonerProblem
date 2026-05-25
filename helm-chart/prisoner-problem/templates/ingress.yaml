@@ -1,4 +1,13 @@
 {{- if .Values.ingress.enabled }}
+{{- $clusterDomain := "" }}
+{{- $cluster := lookup "management.cattle.io/v3" "Cluster" "" "local" }}
+{{- if $cluster }}
+{{- $clusterDomain = index $cluster.metadata.labels "domain" | default "" }}
+{{- end }}
+{{- if not $clusterDomain }}
+{{- $clusterDomain = "local.stevemander.uk" }}
+{{- end }}
+---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -14,23 +23,21 @@ spec:
   {{- if .Values.ingress.className }}
   ingressClassName: {{ .Values.ingress.className }}
   {{- end }}
-  {{- with .Values.ingress.tls }}
-  tls:
-    {{- toYaml . | nindent 4 }}
-  {{- end }}
   rules:
-    {{- range .Values.ingress.hosts }}
-    - host: {{ .host | quote }}
+    - host: "prisvis.{{ $clusterDomain }}"
       http:
         paths:
-          {{- range .paths }}
-          - path: {{ .path }}
-            pathType: {{ .pathType }}
+          - path: /
+            pathType: Prefix
             backend:
               service:
-                name: {{ include "prisoner-problem.fullname" $ }}-service
+                name: {{ include "prisoner-problem.fullname" . }}-service
                 port:
-                  number: {{ $.Values.service.port }}
-          {{- end }}
-    {{- end }}
+                  number: {{ .Values.service.port }}
+  {{- if .Values.ingress.tls }}
+  tls:
+    - hosts:
+        - "prisvis.{{ $clusterDomain }}"
+      secretName: {{ include "prisoner-problem.fullname" . }}-tls
+  {{- end }}
 {{- end }}
